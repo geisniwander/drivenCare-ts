@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "esModuleInterop": true,
+        "module":"es6",
+        "baseUrl": ".",
+        "moduleResolution":"node",
+        "paths": {
+            "jsonwebtoken": ["node_modules/jsonwebtoken"]
+          }
+    },
+    
+    "ts-node": {
+        "esm":true,
+    }
+}
