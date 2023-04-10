@@ -1,6 +1,22 @@
 import errors from "../errors/index.js";
 import "dotenv/config";
 import appointmentsRepository from "../repositories/appointmentsRepository.js";
+import { boolean } from "joi";
+
+
+interface Appointment {
+  id: Number,
+  doctor_name: string, 
+  patient_name: string,
+  specialty:string,
+  date: Date,
+  canceled: boolean,
+  finished: boolean
+}
+
+interface Schedule {
+  time: Date
+}
 
 async function createAppointment(id:number, doctor_id: number, date: Date, hour: string): Promise<void> {
   const validHour = /^([01]\d|2[0-3]):(00|30)(:[0-5]\d)?$/i.test(hour);
@@ -47,7 +63,7 @@ async function finishAppointment(appointment_id: number, id: number): Promise<vo
   await appointmentsRepository.finishAppointment(appointment_id, id);
 }
 
-async function findAppointmentsByPatientId(id: number){
+async function findAppointmentsByPatientId(id: number): Promise<Appointment[]>{
   const { rowCount, rows } =
     await appointmentsRepository.findAppointmentsByPatientId(id);
   if (!rowCount) throw errors.notFoundError();
@@ -55,7 +71,7 @@ async function findAppointmentsByPatientId(id: number){
   return rows;
 }
 
-async function findAppointmentsFinishedByPatient(id: number) {
+async function findAppointmentsFinishedByPatient(id: number): Promise<Appointment[]> {
   const { rowCount, rows } =
     await appointmentsRepository.findAppointmentsFinishedByPatient(id);
   if (!rowCount) throw errors.notFoundError();
@@ -63,7 +79,7 @@ async function findAppointmentsFinishedByPatient(id: number) {
   return rows;
 }
 
-async function findAppointmentsFinishedByDoctor(id: number) {
+async function findAppointmentsFinishedByDoctor(id: number): Promise<Appointment[]> {
   const { rowCount, rows } =
     await appointmentsRepository.findAppointmentsFinishedByDoctor(id);
   if (!rowCount) throw errors.notFoundError();
@@ -71,7 +87,7 @@ async function findAppointmentsFinishedByDoctor(id: number) {
   return rows;
 }
 
-async function findAppointmentsByDoctorId(id: number) {
+async function findAppointmentsByDoctorId(id: number): Promise<Appointment[]> {
   const { rowCount, rows } =
     await appointmentsRepository.findAppointmentsByDoctorId(id);
   if (!rowCount) throw errors.notFoundError();

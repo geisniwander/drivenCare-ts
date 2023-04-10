@@ -5,6 +5,18 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import patientsRepository from "../repositories/patientsRepository.js";
 
+interface Doctor {
+  name:string,
+  email:string, 
+  specialty:string, 
+  city:string, 
+  state:string
+}
+
+interface Schedule {
+  time: Date
+}
+
 async function create(
   name: string,
   email: string,
@@ -46,21 +58,21 @@ async function signin(email: string, password: string): Promise<string> {
   return token;
 }
 
-async function findDoctorByCity(city: string) {
+async function findDoctorByCity(city: string): Promise<Doctor[]> {
   const { rowCount, rows } = await doctorsRepository.findDoctorByCity(city);
   if (!rowCount) throw errors.notFoundError();
 
   return rows;
 }
 
-async function findDoctorByState(state: string) {
+async function findDoctorByState(state: string): Promise<Doctor[]>  {
   const { rowCount, rows } = await doctorsRepository.findDoctorByState(state);
   if (!rowCount) throw errors.notFoundError();
 
   return rows;
 }
 
-async function findDoctorBySpecialty(specialty: string) {
+async function findDoctorBySpecialty(specialty: string): Promise<Doctor[]>  {
   const { rowCount, rows } = await doctorsRepository.findDoctorBySpecialty(
     specialty
   );
@@ -69,14 +81,14 @@ async function findDoctorBySpecialty(specialty: string) {
   return rows;
 }
 
-async function findDoctorByName(name: string) {
+async function findDoctorByName(name: string): Promise<Doctor[]>  {
   const { rowCount, rows } = await doctorsRepository.findDoctorByName(name);
   if (!rowCount) throw errors.notFoundError();
 
   return rows;
 }
 
-async function getSchedule(id: number, date: Date) {
+async function getSchedule(id: number, date: Date): Promise<Schedule[]>  {
   const { rowCount, rows } = await doctorsRepository.getSchedule(id, date);
   if (!rowCount) throw errors.notFoundError();
 
