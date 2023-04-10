@@ -3,22 +3,26 @@ import "dotenv/config";
 import appointmentsRepository from "../repositories/appointmentsRepository.js";
 import { boolean } from "joi";
 
-
 interface Appointment {
-  id: Number,
-  doctor_name: string, 
-  patient_name: string,
-  specialty:string,
-  date: Date,
-  canceled: boolean,
-  finished: boolean
+  id: Number;
+  doctor_name: string;
+  patient_name: string;
+  specialty: string;
+  date: Date;
+  canceled: boolean;
+  finished: boolean;
 }
 
 interface Schedule {
-  time: Date
+  time: Date;
 }
 
-async function createAppointment(id:number, doctor_id: number, date: Date, hour: string): Promise<void> {
+async function createAppointment(
+  id: number,
+  doctor_id: number,
+  date: Date,
+  hour: string
+): Promise<void> {
   const validHour = /^([01]\d|2[0-3]):(00|30)(:[0-5]\d)?$/i.test(hour);
   const [hourString, minuteString] = hour.split(":");
   const hourNumber = parseInt(hourString, 10);
@@ -43,27 +47,33 @@ async function createAppointment(id:number, doctor_id: number, date: Date, hour:
   await appointmentsRepository.createAppointment(id, doctor_id, date, hour);
 }
 
-async function cancelAppointment(appointment_id: number, id: number): Promise<void> {
+async function cancelAppointment(
+  appointment_id: number,
+  id: number
+): Promise<void> {
   const { rowCount } = await appointmentsRepository.findAppointmentsById(
     appointment_id,
-    id,
+    id
   );
   if (!rowCount) throw errors.invalidAppointmentError();
 
   await appointmentsRepository.cancelAppointment(appointment_id, id);
 }
 
-async function finishAppointment(appointment_id: number, id: number): Promise<void> {
+async function finishAppointment(
+  appointment_id: number,
+  id: number
+): Promise<void> {
   const { rowCount } = await appointmentsRepository.findAppointmentsById(
     appointment_id,
-    id,
+    id
   );
   if (!rowCount) throw errors.invalidAppointmentError();
 
   await appointmentsRepository.finishAppointment(appointment_id, id);
 }
 
-async function findAppointmentsByPatientId(id: number): Promise<Appointment[]>{
+async function findAppointmentsByPatientId(id: number): Promise<Appointment[]> {
   const { rowCount, rows } =
     await appointmentsRepository.findAppointmentsByPatientId(id);
   if (!rowCount) throw errors.notFoundError();
@@ -71,7 +81,9 @@ async function findAppointmentsByPatientId(id: number): Promise<Appointment[]>{
   return rows;
 }
 
-async function findAppointmentsFinishedByPatient(id: number): Promise<Appointment[]> {
+async function findAppointmentsFinishedByPatient(
+  id: number
+): Promise<Appointment[]> {
   const { rowCount, rows } =
     await appointmentsRepository.findAppointmentsFinishedByPatient(id);
   if (!rowCount) throw errors.notFoundError();
@@ -79,7 +91,9 @@ async function findAppointmentsFinishedByPatient(id: number): Promise<Appointmen
   return rows;
 }
 
-async function findAppointmentsFinishedByDoctor(id: number): Promise<Appointment[]> {
+async function findAppointmentsFinishedByDoctor(
+  id: number
+): Promise<Appointment[]> {
   const { rowCount, rows } =
     await appointmentsRepository.findAppointmentsFinishedByDoctor(id);
   if (!rowCount) throw errors.notFoundError();

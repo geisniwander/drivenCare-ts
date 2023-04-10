@@ -1,4 +1,4 @@
-import {connectionDb} from "../config/database.js";
+import { connectionDb } from "../config/database.js";
 import { QueryResult } from "pg";
 
 async function findPatientByEmail(email: string): Promise<QueryResult> {
@@ -9,10 +9,13 @@ async function findPatientByEmail(email: string): Promise<QueryResult> {
     [email]
   );
   return result;
-
 }
 
-async function createPatient(name: string, email: string, password: string): Promise<QueryResult> {
+async function createPatient(
+  name: string,
+  email: string,
+  password: string
+): Promise<QueryResult> {
   const result = await connectionDb.query(
     `
         INSERT INTO "public.patients" (name, email, password)
@@ -21,7 +24,6 @@ async function createPatient(name: string, email: string, password: string): Pro
     [name, email, password]
   );
   return result;
-
 }
 
 async function findPatientById(id: Number): Promise<QueryResult> {
@@ -32,7 +34,6 @@ async function findPatientById(id: Number): Promise<QueryResult> {
     [id]
   );
   return result;
-
 }
 
 export default {

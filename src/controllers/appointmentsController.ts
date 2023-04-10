@@ -1,43 +1,70 @@
 import { Request, Response, NextFunction } from "express";
 import appointmentService from "../services/appointmentService.js";
 
-async function createAppointment(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function createAppointment(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { id } = res.locals.patient;
   const { doctor_id, date, hour } = req.body;
 
   try {
-    await appointmentService.createAppointment(Number(id), Number(doctor_id), date, hour);
+    await appointmentService.createAppointment(
+      Number(id),
+      Number(doctor_id),
+      date,
+      hour
+    );
     res.sendStatus(201);
   } catch (err) {
     next(err);
   }
 }
 
-async function cancelAppointment(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function cancelAppointment(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { id } = res.locals.doctor;
   const { appointment_id } = req.params;
   try {
-    await appointmentService.cancelAppointment(Number(appointment_id), Number(id));
+    await appointmentService.cancelAppointment(
+      Number(appointment_id),
+      Number(id)
+    );
     res.sendStatus(201);
   } catch (err) {
     next(err);
   }
 }
 
-async function finishAppointment(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function finishAppointment(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { id } = res.locals.doctor;
 
   const { appointment_id } = req.params;
 
   try {
-    await appointmentService.finishAppointment( Number(appointment_id), Number(id) );
-   res.sendStatus(201);
+    await appointmentService.finishAppointment(
+      Number(appointment_id),
+      Number(id)
+    );
+    res.sendStatus(201);
   } catch (err) {
     next(err);
   }
 }
 
-async function findAppointmentsByDoctorId(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function findAppointmentsByDoctorId(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { id } = res.locals.doctor;
   try {
     const appointments = await appointmentService.findAppointmentsByDoctorId(
@@ -50,7 +77,11 @@ async function findAppointmentsByDoctorId(req: Request, res:Response, next: Next
   }
 }
 
-async function findAppointmentsFinishedByDoctor(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function findAppointmentsFinishedByDoctor(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { id } = res.locals.doctor;
 
   try {
@@ -63,7 +94,11 @@ async function findAppointmentsFinishedByDoctor(req: Request, res:Response, next
   }
 }
 
-async function findAppointmentsFinishedByPatient(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function findAppointmentsFinishedByPatient(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { id } = res.locals.patient;
 
   try {
@@ -76,7 +111,11 @@ async function findAppointmentsFinishedByPatient(req: Request, res:Response, nex
   }
 }
 
-async function findAppointmentsByPatientId(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function findAppointmentsByPatientId(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { id } = res.locals.patient;
 
   try {

@@ -1,12 +1,12 @@
 interface Error {
-  name:string,
-  message:string, 
+  name: string;
+  message: string;
 }
 
 interface ErrorEmail {
-  name:string,
-  message:string, 
-  email: string
+  name: string;
+  message: string;
+  email: string;
 }
 
 function conflictError(message: string[]): Error {
@@ -16,7 +16,7 @@ function conflictError(message: string[]): Error {
   };
 }
 
-function ConflictDateError(message: Date): Error  {
+function ConflictDateError(message: Date): Error {
   return {
     name: "ConflictDateError",
     message: `A data/horário não estão disponíveis (consulta agendada no horário ou fora do horário de atendimento). Lembre-se: o horário de funcionamento é entre
@@ -24,7 +24,7 @@ function ConflictDateError(message: Date): Error  {
   };
 }
 
-function duplicatedEmailError(email: string): ErrorEmail  {
+function duplicatedEmailError(email: string): ErrorEmail {
   return {
     name: "DuplicatedEmailError",
     message: "O email informado já está sendo utilizado!",
@@ -32,28 +32,28 @@ function duplicatedEmailError(email: string): ErrorEmail  {
   };
 }
 
-function unauthorizedError(): Error  {
+function unauthorizedError(): Error {
   return {
     name: "UnauthorizedError",
     message: "Você precisa realizar login para continuar",
   };
 }
 
-function notFoundError(): Error  {
+function notFoundError(): Error {
   return {
     name: "NotFoundError",
     message: "Não encontrado!",
   };
 }
 
-function invalidCredentialsError(): Error  {
+function invalidCredentialsError(): Error {
   return {
     name: "InvalidCredentialsError",
     message: "Credenciais incorretas",
   };
 }
 
-function invalidAppointmentError(): Error  {
+function invalidAppointmentError(): Error {
   return {
     name: "InvalidAppointmentError",
     message: "Consulta não encontrada",

@@ -5,7 +5,11 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import doctorsRepository from "../repositories/doctorsRepository.js";
 
-async function createPatient(name: string, email: string, password: string): Promise<void> {
+async function createPatient(
+  name: string,
+  email: string,
+  password: string
+): Promise<void> {
   const { rowCount } = await patientsRepository.findPatientByEmail(email);
   const doctorCount = (await doctorsRepository.findDoctorByEmail(email))
     .rowCount;
@@ -15,7 +19,7 @@ async function createPatient(name: string, email: string, password: string): Pro
   await patientsRepository.createPatient(
     name,
     email,
-    password = hashPassword,
+    (password = hashPassword)
   );
 }
 
@@ -31,7 +35,7 @@ async function signin(email: string, password: string): Promise<string> {
 
   const token = jwt.sign({ patient_id: patient.id }, process.env.SECRET_KEY, {
     expiresIn: 86400,
-  }); 
+  });
 
   return token;
 }

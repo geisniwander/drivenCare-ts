@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import patientService from "../services/patientService.js";
 
-async function createPatient(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function createPatient(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { name, email, password } = req.body;
   try {
     await patientService.createPatient(name, email, password);
@@ -11,7 +15,11 @@ async function createPatient(req: Request, res:Response, next: NextFunction): Pr
   }
 }
 
-async function signin(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function signin(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { email, password } = req.body;
   try {
     const token = await patientService.signin(email, password);

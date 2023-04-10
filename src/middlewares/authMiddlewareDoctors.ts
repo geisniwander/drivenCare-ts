@@ -7,7 +7,11 @@ interface DecodedToken {
   doctor_id: number;
 }
 
-async function authValidationDoctors(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function authValidationDoctors(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { authorization } = req.headers;
   if (!authorization) throw errors.unauthorizedError();
 
@@ -17,23 +21,27 @@ async function authValidationDoctors(req: Request, res:Response, next: NextFunct
   const [schema, token] = parts;
   if (schema !== "Bearer") throw errors.unauthorizedError();
 
-  jwt.verify(token, process.env.SECRET_KEY, async (error, decoded: DecodedToken) => {
-    try {
-      if (error) throw errors.unauthorizedError();
+  jwt.verify(
+    token,
+    process.env.SECRET_KEY,
+    async (error, decoded: DecodedToken) => {
+      try {
+        if (error) throw errors.unauthorizedError();
 
-      const {
-        rows: [doctor],
-      } = await doctorsRepository.findDoctorById(decoded.doctor_id);
+        const {
+          rows: [doctor],
+        } = await doctorsRepository.findDoctorById(decoded.doctor_id);
 
-      if (!doctor) throw errors.unauthorizedError();
+        if (!doctor) throw errors.unauthorizedError();
 
-      res.locals.doctor = doctor;
+        res.locals.doctor = doctor;
 
-      next();
-    } catch (err) {
-      next(err);
+        next();
+      } catch (err) {
+        next(err);
+      }
     }
-  });
+  );
 }
 
 export default { authValidationDoctors };

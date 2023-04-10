@@ -1,24 +1,25 @@
 import { Request, Response, NextFunction } from "express";
 import doctorService from "../services/doctorService.js";
 
-async function create(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function create(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { name, email, password, specialty, city, state } = req.body;
   try {
-    await doctorService.create(
-      name,
-      email,
-      password,
-      specialty,
-      city,
-      state,
-    );
+    await doctorService.create(name, email, password, specialty, city, state);
     res.sendStatus(201);
   } catch (err) {
     next(err);
   }
 }
 
-async function signin(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function signin(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { email, password } = req.body;
   try {
     const token = await doctorService.signin(email, password);
@@ -28,7 +29,11 @@ async function signin(req: Request, res:Response, next: NextFunction): Promise<v
   }
 }
 
-async function findDoctorsBySpecialty(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function findDoctorsBySpecialty(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { specialty } = req.body;
   try {
     const doctors = await doctorService.findDoctorBySpecialty(specialty);
@@ -38,7 +43,11 @@ async function findDoctorsBySpecialty(req: Request, res:Response, next: NextFunc
   }
 }
 
-async function findDoctorsByCity(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function findDoctorsByCity(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { city } = req.body;
   try {
     const doctors = await doctorService.findDoctorByCity(city);
@@ -48,7 +57,11 @@ async function findDoctorsByCity(req: Request, res:Response, next: NextFunction)
   }
 }
 
-async function findDoctorsByState(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function findDoctorsByState(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { state } = req.body;
   try {
     const doctors = await doctorService.findDoctorByState(state);
@@ -58,7 +71,11 @@ async function findDoctorsByState(req: Request, res:Response, next: NextFunction
   }
 }
 
-async function findDoctorsByName(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function findDoctorsByName(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { name } = req.body;
   try {
     const doctors = await doctorService.findDoctorByName(name);
@@ -68,7 +85,11 @@ async function findDoctorsByName(req: Request, res:Response, next: NextFunction)
   }
 }
 
-async function getSchedule(req: Request, res:Response, next: NextFunction): Promise<void>  {
+async function getSchedule(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
   const { id, date } = req.body;
   try {
     const schedule = await doctorService.getSchedule(id, date);
