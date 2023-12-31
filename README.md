@@ -1,12 +1,9 @@
 # <p align = "center"> SocialPostify </p>
 <p align = "center">
-<br/>
 
 ## ✏️ Descrição
-<p align="justify" >Projeto que implementa uma API capaz de realizar o agendamento de consultas médicas, nesse sentido, um paciente pode agendar e vizualizar agendamentos de consultas e um médico pode visualizar suas consultas agendadas, podendo confirmar ou cancerlar
- cada uma delas. Também é possível que o paciente e médico visualizem um histórico das consultas agendadas e realizadas.</p>
+<p align="justify" >Refatoração do projeto https://github.com/geisniwander/drivencare utilizando TYPESCRIPT.</p>
 
-</br>
 
 ## ➡️ Rotas
 
@@ -67,4 +64,5 @@ Rota para logar paciente, informe "email" e "password" pelo body
 
 - [NODEJS](https://nodejs.org/en)
 - [POSTGRESQL](https://www.postgresql.org/)
+- [TYPESCRIPT](https://www.typescriptlang.org/)
 </br>
